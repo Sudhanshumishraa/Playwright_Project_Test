@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
   await page.goto('https://crmuat.cylsys.com/');
+  await page.pause();
   await page.getByRole('textbox', { name: 'Enter email' }).click();
   await page.getByRole('textbox', { name: 'Enter email' }).fill('sudhanshu.mishra@cylsys.com');
   await page.getByRole('textbox', { name: 'Enter email' }).press('Tab');

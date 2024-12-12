@@ -1,0 +1,33 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://www.w3schools.com/');
+  await page.getByRole('link', { name: 'HTML', exact: true }).click();
+  const page1Promise = page.waitForEvent('popup');
+  await page.getByRole('link', { name: 'Try it Yourself »' }).click();
+  const page1 = await page1Promise;
+  await page1.getByRole('link', { name: '' }).click();
+  await page1.getByText('×').click();
+  await page1.getByText('Home HTML Try HTML Run ❯ Get').press('ControlOrMeta+a');
+  await page1.locator('pre').filter({ hasText: '<p>This is a paragraph.</p>' }).click();
+  await page1.locator('pre').filter({ hasText: '</html>' }).click();
+  await page1.getByRole('link', { name: 'Home' }).click();
+  await page1.getByRole('button', { name: 'Services' }).click();
+  await page1.getByRole('button', { name: 'Exercises' }).click();
+  await page1.getByTitle('HTML Exercises').nth(1).click();
+  await page1.getByRole('link', { name: 'HTML Audio/Video' }).click();
+  await page1.getByRole('link', { name: 'audioTracks' }).click();
+  const page2Promise = page1.waitForEvent('popup');
+  await page1.locator('#spacemyfooter').getByRole('link', { name: '' }).click();
+  const page2 = await page2Promise;
+  await page2.getByRole('button', { name: 'Close' }).click();
+  const page3Promise = page2.waitForEvent('popup');
+  await page2.getByRole('link', { name: 'www.w3schools.com' }).click();
+  const page3 = await page3Promise;
+  await page3.getByPlaceholder('Search our tutorials, e.g.').click();
+  await page3.getByPlaceholder('Search our tutorials, e.g.').fill('ht');
+  await page3.locator('#listofsearchresults').getByRole('link', { name: 'HTML Tutorial' }).click();
+  await page3.getByRole('link', { name: 'Next ❯' }).first().click();
+  await page3.getByRole('link', { name: 'Next ❯' }).first().click();
+  await page3.getByRole('link', { name: 'Next ❯' }).first().click();
+});
